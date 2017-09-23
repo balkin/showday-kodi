@@ -1,4 +1,4 @@
-VERSION=1.0.6
+VERSION=1.0.7
 FILENAME=plugin.video.showday.tv-$(VERSION).zip
 PLUGIN=plugin.video.showday.tv
 

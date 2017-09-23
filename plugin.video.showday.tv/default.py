@@ -392,6 +392,7 @@ def Serial_Info(params):
             s_num += 1
 
             i = xbmcgui.ListItem(name, path = urllib.unquote(s_url), thumbnailImage=mi.img) # iconImage=mi.img
+            print("year: ", mi.year)
             u = sys.argv[0] + '?mode=PLAY'
             u += '&url=%s'%urllib.quote_plus(s_url)
             u += '&name=%s'%urllib.quote_plus(name)
@@ -400,7 +401,7 @@ def Serial_Info(params):
             u += '&is_season=%s'%urllib.quote_plus(sname)
             i.setInfo(type='video', infoLabels={    'title':       mi.title,
                                                     'cast' :       mi.actors.split(','),
-                            						'year':        int(mi.year) if not mi.year.find('-') else int(mi.year.split('-')[1]),
+                            						'year':        int(mi.year[:4]),
                             						'director':    mi.director,
                             						'plot':        mi.text,
                             						'genre':       mi.genre.split(',')})
