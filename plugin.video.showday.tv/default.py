@@ -52,10 +52,13 @@ def showMessage(heading, message, times = 3000):
 def get_HTML(url, post = None, ref = None, get_url = False):
     request = urllib2.Request(url, post)
     host = urlparse.urlsplit(url).hostname
-    if ref==None:
-        ref='http://'+host
 
-    print url
+    if ref==None:
+        if host == None:
+            print ("ref and host are None: " + url)
+            ref=BASE_URL
+        else:
+            ref='http://'+host
 
     request.add_header('User-Agent', 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)')
     request.add_header('Host',   host)
