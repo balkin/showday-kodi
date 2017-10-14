@@ -450,7 +450,11 @@ def Get_Info(rec):
         except:
             pass
     #-- img
-    i.img = BASE_URL + rec.find('div', {'class':'image'}).find('img')['src']
+    imgsrc = rec.find('div', {'class':'image'}).find('img')['src']
+    if imgsrc.startswith("http:"):
+        i.img = imgsrc
+    else:
+        i.img = BASE_URL + imgsrc
 
     #-- return movie info
     return i
