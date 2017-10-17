@@ -48,7 +48,7 @@ h = int(sys.argv[1])
 def showMessage(heading, message, times = 3000):
     xbmc.executebuiltin('XBMC.Notification("%s", "%s", %s, "%s")'%(heading, message, times, icon))
 
-#---------- HTPP interface -----------------------------------------------------
+#---------- HTTP interface -----------------------------------------------------
 def get_HTML(url, post = None, ref = None, get_url = False):
     request = urllib2.Request(url, post)
     host = urlparse.urlsplit(url).hostname
