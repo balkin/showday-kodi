@@ -55,7 +55,6 @@ def get_HTML(url, post = None, ref = None, get_url = False):
 
     if ref==None:
         if host == None:
-            print ("ref and host are None: " + url)
             ref=BASE_URL
         else:
             ref='http://'+host
@@ -66,13 +65,19 @@ def get_HTML(url, post = None, ref = None, get_url = False):
     request.add_header('Accept-Language', 'ru-RU')
     request.add_header('Referer',             ref)
 
+    xbmc.log("get_HTML " + url + "; ref = " + ref, xbmc.LOGNOTICE)
+
     try:
         f = urllib2.urlopen(request)
-    except IOError, e:
+    except IOError as e:
         if hasattr(e, 'reason'):
-           print 'We failed to reach a server.'
+           print ('We failed to reach a server.')
         elif hasattr(e, 'code'):
-           print 'The server couldn\'t fulfill the request.'
+           print ('The server couldn\'t fulfill the request.')
+    except Exception as ex:
+        xbmc.log("Failed to urlopen " + url, xbmc.LOGWARNING)
+        xbmc.log("Exception was: " + str(ex), xbmc.LOGWARNING)
+        return ""
 
     if get_url == True:
         html = f.geturl()
@@ -418,10 +423,13 @@ def Serial_Info(params):
 def Get_Info(rec):
     i = Info()
     #-- title
-    i.title = rec.find('div', {'class':'text'}).find('a').text.encode('utf-8')
+    try:
+        i.title = rec.find('div', {'class':'text'}).find('h2').find('a').text.encode('utf-8')
+    except:
+        i.title = rec.find('div', {'class':'text'}).find('h1').text.encode('utf-8')
     #-- url
     try:
-        i.url = rec.find('div', {'class':'text'}).find('h4').find('a')['href']
+        i.url = rec.find('div', {'class':'text'}).find('h2').find('a')['href']
     except:
         pass
 
